@@ -6,7 +6,7 @@
 #    By: orezek <orezek@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 10:59:06 by mbartos           #+#    #+#              #
-#    Updated: 2024/12/09 19:59:57 by orezek           ###   ########.fr        #
+#    Updated: 2024/12/10 23:04:24 by orezek           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,23 +16,26 @@ RED =	\033[31m
 BCYAN =	\033[96m
 NC =	\033[0m
 
-#name
+# name
 NAME =		bureaucrat
 
-#compiler
+# compiler
 CCP =		c++
-# CFLAGS =	-Wall -Wextra -Werror
 CFLAGS =	-Wall -Wextra -Werror -std=c++98
 
-#sources
+# sources
 SRC =	main.cpp Bureaucrat.cpp
 
-#objects
+# objects
 OBJ_PATH =	obj/
 OBJ =		$(SRC:.cpp=.o)
 OBJS =		$(addprefix $(OBJ_PATH), $(OBJ))
 
-all: $(NAME)
+# binary folder
+BIN_PATH =	bin/
+BIN_NAME =	$(BIN_PATH)$(NAME)
+
+all: $(BIN_NAME)
 
 $(OBJ_PATH)%.o : %.cpp
 	$(CCP) $(CFLAGS) -c $< -o $@
@@ -40,21 +43,25 @@ $(OBJ_PATH)%.o : %.cpp
 $(OBJS): | $(OBJ_PATH)
 
 $(OBJ_PATH):
-	@mkdir $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)
 
-$(NAME): $(OBJS)
+$(BIN_NAME): $(OBJS) | $(BIN_PATH)
 	@echo "$(BOLD)$(BCYAN)[ Compiling $(NAME)... ]$(NC)"
-	$(CCP) $(CFLAGS) $(OBJS) -o $(NAME)
-	@echo "$(BOLD)$(GREEN)[ Program $(NAME) ready! ]$(NC)"
+	$(CCP) $(CFLAGS) $(OBJS) -o $(BIN_NAME)
+	@echo "$(BOLD)$(GREEN)[ Program $(NAME) ready in $(BIN_PATH)! ]$(NC)"
+
+$(BIN_PATH):
+	@mkdir -p $(BIN_PATH)
 
 clean:
 	@rm -Rf $(OBJ_PATH)
 	@echo "$(BOLD)$(RED)[ Obj files deleted ]$(NC)"
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(BIN_NAME)
+	@rm -Rf $(BIN_PATH)
 	@echo "$(BOLD)$(RED)[ Program deleted ]$(NC)"
 
 re: fclean all
 
-.PHONY: all, re, clean, fclean
+.PHONY: all re clean fclean

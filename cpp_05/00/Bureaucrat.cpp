@@ -48,7 +48,7 @@ void Bureaucrat::decrementGrade(void)
 	{
 		throw(Bureaucrat::GradeTooLowException());
 	}
-	this - grade++;
+	this->grade++;
 }
 
 std::ostream &operator<<(std::ostream &outputStream, const Bureaucrat &bureaucrat)
@@ -57,12 +57,14 @@ std::ostream &operator<<(std::ostream &outputStream, const Bureaucrat &bureaucra
 	return (outputStream);
 }
 
+// exception specification does not throw any exception
 const char *Bureaucrat::GradeTooHighException::what(void) const throw()
 {
-	return ("Grade too high! 1 is maximum-ultra-high king of everything grade!");
+	return ("Grade too high! You’re already the Supreme Overlord of Bureaucracy, no need to go higher!");
 }
 
 const char *Bureaucrat::GradeTooLowException::what(void) const throw()
 {
-	return ("Grade too low! 150 is minimum grade for the lowest pleb bureaucrat!");
+	return ("Grade too low! Even a snail with a stamp has a higher rank than this!");
 }
+

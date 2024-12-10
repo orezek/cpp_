@@ -6,11 +6,11 @@
 /*   By: orezek <orezek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 20:12:16 by orezek            #+#    #+#             */
-/*   Updated: 2024/12/09 23:10:44 by orezek           ###   ########.fr       */
+/*   Updated: 2024/12/10 22:57:51 by orezek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma BUREAUCRAT_HPP
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -37,6 +37,7 @@ public:
 	class GradeTooLowException : public std::exception
 	{
 		public:
+		// exception specification does not throw any exception
 			virtual const char *what() const throw();
 	};
 
